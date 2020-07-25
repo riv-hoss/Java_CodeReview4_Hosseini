@@ -22,6 +22,8 @@ public class Main {
                 4, 66.99, Category.Trousers);
         Product prd04 = new Product("Jacket", "With wool inside",
                 3, 89.99, Category.Jackets);
+        Product prd05 = new Product("Accessories", "Nice ones",
+                15, 2.99, Category.Accessories);
 
         // products HashMap
         HashMap<Integer, Product> products = new HashMap()
@@ -44,6 +46,7 @@ public class Main {
         shop02.addProduct(prd02);
         shop02.addProduct(prd03);
         shop02.addProduct(prd04);
+        shop02.addProduct(prd05);
 
 
 
@@ -87,6 +90,17 @@ public class Main {
 
         // low stock demo
         System.out.printf("%n%s low stock demo %s %n", lineBr, lineBr);
+        shop02.showLowStock();
+
+        System.out.printf("%n%s Staff cannot add more than 13 stock %s %n", lineBr, lineBr);
+        System.out.println("\n----- Shop02 inventory has 15 Accessories -----");
+        System.out.println(shop02.getInventory());
+
+        System.out.println("\n----- Shop02 stock of Accessories is full, cannot add more -----");
+        shop02.addProduct(prd05);
+
+
+
 
 
 

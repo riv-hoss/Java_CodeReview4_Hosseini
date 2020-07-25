@@ -48,8 +48,39 @@ public class Shop {
     }
 
     // method add product to shop
-    public void addProduct (Product p) {
-        this.inventory.add(p);
+    public void addProduct (Product product) {
+        if (inventory.isEmpty()) {
+            if ( product.getProductQuantity() <= 15) {
+                inventory.add(product);
+            }
+
+        } else { // if inventory is not empty
+
+                if (inventory.contains(product)) {
+                    for (Product p : inventory ) {
+                        if (p.getProductId() == product.getProductId()) {
+                            int currentQuantity =  p.getProductQuantity();
+                            int newlyAddedQuantity = product.getProductQuantity();
+                            try {
+                                p.setProductQuantity(currentQuantity + newlyAddedQuantity);
+                            } catch (Exception e) {
+                                System.out.println("An error occurred!");
+                                e.printStackTrace();
+
+                            }
+
+                        }
+                    }
+
+                } else {
+                    inventory.add(product);
+                }
+
+
+
+        }
+
+
     }
 
     // method - sell item
@@ -60,7 +91,14 @@ public class Shop {
                 int newQuantity = currentQuantity - quantity;
                 PurchaseHistory hist = new PurchaseHistory(new Date(), product, quantity);
                 history.put(user.getId(), hist); // add new purchase history
-                product.setProductQuantity(newQuantity);
+
+                try {
+                    product.setProductQuantity(newQuantity);
+                } catch (Exception e) {
+                    System.out.println("An error occurred!");
+                    e.printStackTrace();
+                }
+
                 if (!registeredUsers.contains(user)) { // add new user
                     registeredUsers.add(user);
                 }
@@ -80,9 +118,16 @@ public class Shop {
                 lowStockItems.add(p);
             }
         }
-        for (Product p : lowStockItems) {
-            System.out.printf("%n***** Low stock items ***** %n%20s %d items",
-                    p.getProductName(), p.getProductQuantity());
+        if (!lowStockItems.isEmpty()) { // if there is a low stock item
+            System.out.println("****** Low stock items ******");
+            for (Product p : lowStockItems) {
+                System.out.printf("%-20s %d items%n",
+                        p.getProductName(), p.getProductQuantity());
+            }
+            System.out.println("*****************************");
+
+        } else {
+            System.out.println("******* We have everything is stock! ********");
         }
     }
 

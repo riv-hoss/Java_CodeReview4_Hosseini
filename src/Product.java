@@ -14,7 +14,14 @@ public class Product {
         this.productId = ++counter;
         this.productName = productName;
         this.productDescription = productDescription;
-        setProductQuantity(productQuantity); // limitation on max quantity- 15 articles
+        try {
+            setProductQuantity(productQuantity); // limitation on max quantity- 15 articles
+
+        } catch (Exception e) {
+            System.out.println("An error occurred!");
+            e.printStackTrace();
+        }
+
         this.productPrice = productPrice;
         this.productCategory = productCategory;
 
@@ -52,13 +59,12 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public void setProductQuantity(int productQuantity) {
-        if ( productQuantity > 15) {
-            System.out.println("Max quantity exceeded. Capacity is only 15 articles!");
-        } else if (productQuantity < 0) {
-            System.err.println("Zero item!!");
-        } else {
+    public void setProductQuantity(int productQuantity) throws Exception{
+        if ( productQuantity <= 15) {
             this.productQuantity = productQuantity;
+        } else {
+            throw new StockLimitReachedException("Stock is full!");
+
         }
 
     }

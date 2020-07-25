@@ -47,7 +47,14 @@ public class User {
         return phone;
     }
 
-    public void buyItem (Category item, Shop shop, int quantity) {
-        shop.sellItem(item, quantity);
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + fname + " " +  lname + '\'' +
+                ", eMail='" + eMail + "\'\n" +
+                ", address='" + address + ", " +  zip + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

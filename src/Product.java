@@ -1,3 +1,4 @@
+import java.util.Objects;
 
 public class Product {
     private static int counter = 0;
@@ -53,9 +54,9 @@ public class Product {
 
     public void setProductQuantity(int productQuantity) {
         if ( productQuantity > 15) {
-            System.err.println("Max quantity exceeded. Capacity is only 15 articles!");
+            System.out.println("Max quantity exceeded. Capacity is only 15 articles!");
         } else if (productQuantity < 0) {
-            System.err.println("Max quantity exceeded. Capacity is only 15 articles!");
+            System.err.println("Zero item!!");
         } else {
             this.productQuantity = productQuantity;
         }
@@ -70,17 +71,28 @@ public class Product {
         this.productCategory = productCategory;
     }
 
+    @Override
+    public boolean equals(Object o) { // equals() compares just ID since it is unique.
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return productId == product.productId;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId);
+    }
 
     @Override
     public String toString() {
         return "Product{" +
-                "productId=" + productId +
-                ", productName='" + productName + '\'' +
-                ", productDescription='" + productDescription + '\'' +
-                ", productQuantity=" + productQuantity +
-                ", productPrice=" + productPrice +
-                ", productCategory=" + productCategory +
+                "Id=" + productId +
+                ", Name='" + productName + "\'\n" +
+                ", Description='" + productDescription + "\'\n" +
+                ", Quantity=" + productQuantity +
+                ", Price=" + productPrice +
+                ", Category=" + productCategory +
                 '}';
     }
 }

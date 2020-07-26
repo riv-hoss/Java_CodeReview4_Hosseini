@@ -49,8 +49,32 @@ public class Shop {
     }
 
     // method add product to shop
-    public void addProduct (Product product) {
-        if (inventory.isEmpty()) {
+    public void addProduct (Product product) throws StockLimitReachedException{
+        if (inventory.contains(product)) {
+            for (Product p : inventory) {
+                if (p.equals(product)) {
+                    int currentQuantity =  p.getProductQuantity();
+                    int newlyAddedQuantity = product.getProductQuantity();
+                    try {
+                        p.setProductQuantity(currentQuantity + newlyAddedQuantity);
+                    } catch (Exception e) {
+                        System.out.println("An error occurred in addProduct method()!");
+                        System.out.println(e.getMessage());
+
+                    }
+                }
+            }
+
+        } else {
+            if ( product.getProductQuantity() <= 15) {
+                inventory.add(product);
+            } else {
+                throw new StockLimitReachedException("More than 15 items cannot be added!");
+            }
+        }
+
+
+       /* if (inventory.isEmpty()) {
             if ( product.getProductQuantity() <= 15) {
                 inventory.add(product);
             }
@@ -59,13 +83,13 @@ public class Shop {
 
                 if (inventory.contains(product)) {
                     for (Product p : inventory ) {
-                        if (p.getProductId() == product.getProductId()) {
+                        if (p.equals(product)) {
                             int currentQuantity =  p.getProductQuantity();
                             int newlyAddedQuantity = product.getProductQuantity();
                             try {
                                 p.setProductQuantity(currentQuantity + newlyAddedQuantity);
                             } catch (Exception e) {
-                                System.out.println("An error occurred!");
+                                System.out.println("An error occurred in addProduct method()!");
                                 e.printStackTrace();
 
                             }
@@ -74,40 +98,49 @@ public class Shop {
                     }
 
                 } else {
-                    inventory.add(product);
+                    if ( product.getProductQuantity() <= 15) {
+                        inventory.add(product);
+                    } else {
+                    }
                 }
 
 
 
         }
-
+*/
 
     }
 
     // method - sell item
     public void sellItem (User user, Product item, int quantity) {
-        for (Product product : inventory) {
-            if (product.equals(item)) { // override equals() method in Product class
-                int currentQuantity = product.getProductQuantity();
-                int newQuantity = currentQuantity - quantity;
-                PurchaseHistory hist = new PurchaseHistory(new Date(), product, quantity);
-                history.put(user.getId(), hist); // add new purchase history
+        if (inventory.contains(item)) { // check if item is available in the shop
 
-                try {
-                    product.setProductQuantity(newQuantity);
-                } catch (Exception e) {
-                    System.out.println("An error occurred!");
-                    e.printStackTrace();
-                }
+            for (Product product : inventory) {
+                if (product.equals(item)) { // override equals() method in Product class
+                    int currentQuantity = product.getProductQuantity();
+                    int newQuantity = currentQuantity - quantity;
+                    PurchaseHistory hist = new PurchaseHistory(new Date(), product, quantity);
+                    history.put(user.getId(), hist); // add new purchase history
 
-                if (!registeredUsers.contains(user)) { // add new user
-                    registeredUsers.add(user);
+                    try {
+                        product.setProductQuantity(newQuantity);
+                    } catch (Exception e) {
+                        System.out.print("An error occurred in sellProduct method()!");
+                        e.printStackTrace();
+
+                    }
+
+                    if (!registeredUsers.contains(user)) { // add new user
+                        registeredUsers.add(user);
+                    }
                 }
-            } else {
-                System.err.printf("%nNo %s with ID %d are available now! %n",
-                        item.getProductCategory(), item.getProductId());
             }
+
+        } else { // if shop does not contain the item
+            System.err.printf("%nNo %s with ID %d are available now! %n",
+                    item.getProductCategory(), item.getProductId());
         }
+
     }
 
 
@@ -151,6 +184,7 @@ public class Shop {
                 "\n6) Display all products of category Accessories." +
                 "\n7) Display all products where stock < 5. " +
                 "\n8) Display all products out of stock. " +
+                "\n9) Display all registered users. " +
                 "\n0) Exit.");
 
         Scanner in = new Scanner(System.in);
@@ -210,6 +244,16 @@ public class Shop {
                         System.out.println(p);
                     }
                 }
+                break;
+            case 9:
+                System.out.println("ID\t\t Name\t\t\t\t\t E-Mail \t\t\t\t\t\t Address \t\t\t\t\tTell");
+                System.out.println("-".repeat(100));
+                for (User u : registeredUsers) {
+                    String userDisplay = String.format("%-5d %-20s %-30s %-30s %-20s", u.getId(),
+                            u.getFullName(), u.geteMail(), u.getFullAddress(), u.getPhone());
+                    System.out.println(userDisplay);
+                }
+                System.out.println("*".repeat(100));
                 break;
             case 0:
                 break;

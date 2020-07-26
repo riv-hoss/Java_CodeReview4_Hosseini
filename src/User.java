@@ -46,6 +46,12 @@ public class User {
     public String getPhone() {
         return phone;
     }
+    public String getFullName() {
+        return fname + " " + lname;
+    }
+    public String getFullAddress() {
+        return address + ", " +  zip;
+    }
 
     @Override
     public String toString() {

@@ -42,17 +42,26 @@ public class Main {
         System.out.println("----- Shop01 BEFORE adding a product -----");
         System.out.println(shop01 + "\n");
         System.out.println("----- Shop01 AFTER adding a product / quantity is 10-----");
-        shop01.addProduct(prd02);
+        try{
+            shop01.addProduct(prd02);
+        } catch ( Exception e) {
+            e.printStackTrace();
+        }
+
         System.out.println(shop01 + "\n");
 
         // new shop
         Shop shop02 = new Shop("Java/Kardon", "Java Platz 8, 9191, New Java City");
-        shop02.addProduct(prd02);
-        shop02.addProduct(prd03);
-        shop02.addProduct(prd04);
-        shop02.addProduct(prd05);
-        shop02.addProduct(prd06);
-        shop02.addProduct(prd07);
+        try {
+            shop02.addProduct(prd02);
+            shop02.addProduct(prd03);
+            shop02.addProduct(prd04);
+            shop02.addProduct(prd05);
+            shop02.addProduct(prd06);
+            shop02.addProduct(prd07);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -102,11 +111,26 @@ public class Main {
         System.out.println("\n----- Shop02 inventory has 15 Accessories -----");
         System.out.println(shop02.getInventory());
 
-        System.out.println("\n----- Shop02 stock of Accessories is full, cannot add more -----");
-        shop02.addProduct(prd05);
+
+        System.out.println("\n----- Shop02 stock of Accessories is full, staff cannot add more -----");
+        try {
+            shop02.addProduct(prd05);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         // trying menu method
-        System.out.printf("%n%s---------- Menu Demo ----------%s %n", lineBr, lineBr);
+        System.out.printf("%n%s========== Menu Demo ==========%s %n", lineBr, lineBr);
+
+        // user02 and user03 buy items from shop02
+        shop02.sellItem(user02, prd03,1);
+        shop02.sellItem(user03, prd04,1);
+
+
+
+
+
 
         try {
             shop02.menu();
@@ -114,6 +138,7 @@ public class Main {
             System.out.println("An error occurred in calling menu() method of Shop class!");
             e.printStackTrace();
         }
+
 
 
 

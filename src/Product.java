@@ -18,7 +18,7 @@ public class Product {
             setProductQuantity(productQuantity); // limitation on max quantity- 15 articles
 
         } catch (Exception e) {
-            System.out.println("An error occurred!");
+            System.out.println("An error occurred while creating new Product object!");
             e.printStackTrace();
         }
 

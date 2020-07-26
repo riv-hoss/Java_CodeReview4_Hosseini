@@ -1,4 +1,5 @@
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
@@ -72,43 +73,6 @@ public class Shop {
                 throw new StockLimitReachedException("More than 15 items cannot be added!");
             }
         }
-
-
-       /* if (inventory.isEmpty()) {
-            if ( product.getProductQuantity() <= 15) {
-                inventory.add(product);
-            }
-
-        } else { // if inventory is not empty
-
-                if (inventory.contains(product)) {
-                    for (Product p : inventory ) {
-                        if (p.equals(product)) {
-                            int currentQuantity =  p.getProductQuantity();
-                            int newlyAddedQuantity = product.getProductQuantity();
-                            try {
-                                p.setProductQuantity(currentQuantity + newlyAddedQuantity);
-                            } catch (Exception e) {
-                                System.out.println("An error occurred in addProduct method()!");
-                                e.printStackTrace();
-
-                            }
-
-                        }
-                    }
-
-                } else {
-                    if ( product.getProductQuantity() <= 15) {
-                        inventory.add(product);
-                    } else {
-                    }
-                }
-
-
-
-        }
-*/
-
     }
 
     // method - sell item
@@ -264,6 +228,33 @@ public class Shop {
     }
 
 
+    // printReport() method
+    public void printReport(User u) {
+        if (!history.containsKey(u.getId())) { // if user exists in the purchase history
+            System.out.printf("%s with unique ID of %d has no purchase history!", u.getFullAddress(), u.getId());
+        } else {
+            try {
+                Product product = history.get(u.getId()).getProduct();
+                int quantity = history.get(u.getId()).getQuantity();
+                Date date = history.get(u.getId()).getDate();
+
+                String report = String.format("%n" + "*".repeat(25) + " Purchase history of user %s " + "*".repeat(25) +
+                        "%n%n%nProduct \t Quantity \t Price \t\t\t\t Date %n" + "-".repeat(90) +
+                        "%n%-20s %-10d %-20f %-20s", u.getFullName(), product.getProductName(),
+                        quantity, product.getProductPrice(), date);
+
+                String fileName = String.format("%s_%s_report.txt", u.getFname(), u.getLname());
+                FileWriter file = new FileWriter(fileName);
+                file.write(report);
+                file.close();
+                System.out.println("Report was successfully created!");
+            } catch (Exception e) {
+                System.out.println("An error occurred while preparing the report!");
+                e.printStackTrace();
+            }
+
+        }
+    }
 
 
 

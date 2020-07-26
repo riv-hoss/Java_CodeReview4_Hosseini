@@ -129,9 +129,6 @@ public class Main {
 
 
 
-
-
-
         try {
             shop02.menu();
         } catch (Exception e) {
@@ -140,6 +137,10 @@ public class Main {
         }
 
 
+        // trying printReport() method
+        System.out.printf("%n%s========== printReport() Demo ==========%s %n", lineBr, lineBr);
+
+        shop02.printReport(user02);
 
 
     }

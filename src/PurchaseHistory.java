@@ -10,6 +10,18 @@ public class PurchaseHistory {
         this.quantity = quantity;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
     @Override
     public String toString() {
         return "PurchaseHistory{" +

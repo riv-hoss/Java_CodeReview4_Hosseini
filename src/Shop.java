@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Shop {
     private String name;
@@ -130,6 +131,98 @@ public class Shop {
             System.out.println("******* We have everything is stock! ********");
         }
     }
+
+
+
+    // menu method
+    public void menu () throws Exception {
+        String hLine = "\n+" + "-".repeat(31) + "+";
+        String welcome = "\n|\t\t\t Welcome \t\t\t|";
+        String toThe = "\n|\t\t\t to the \t\t\t|";
+        String shop = "\n|\t\t\t shop \t\t\t\t|";
+        System.out.println(hLine + welcome + toThe + shop + hLine);
+
+        System.out.println("\n\nMake a selection: " +
+                "\n1) Display all products. " +
+                "\n2) Display all products of category T-shirts." +
+                "\n3) Display all products of category Trousers." +
+                "\n4) Display all products of category Shirts." +
+                "\n5) Display all products of category Jackets." +
+                "\n6) Display all products of category Accessories." +
+                "\n7) Display all products where stock < 5. " +
+                "\n8) Display all products out of stock. " +
+                "\n0) Exit.");
+
+        Scanner in = new Scanner(System.in);
+        System.out.print("\n\nEnter your choice: ");
+        if (!in.hasNextInt()) {
+            System.err.println("Enter only a number!");
+            throw new Exception();
+
+        }
+        int i = in.nextInt();
+
+        switch (i) {
+            case 1:
+                System.out.println(inventory);
+                break;
+            case 2:
+                for (Product p : inventory) {
+                    if (p.getProductCategory().equals(Category.Tshirts)) {
+                        System.out.println(p);
+                    }
+                }
+                break;
+            case 3:
+                for (Product p : inventory) {
+                    if (p.getProductCategory().equals(Category.Trousers)) {
+                        System.out.println(p);
+                    }
+                }
+                break;
+            case 4:
+                for (Product p : inventory) {
+                    if (p.getProductCategory().equals(Category.Shirts)) {
+                        System.out.println(p);
+                    }
+                }
+                break;
+            case 5:
+                for (Product p : inventory) {
+                    if (p.getProductCategory().equals(Category.Jackets)) {
+                        System.out.println(p);
+                    }
+                }
+                break;
+            case 6:
+                for (Product p : inventory) {
+                    if (p.getProductCategory().equals(Category.Accessories)) {
+                        System.out.println(p);
+                    }
+                }
+                break;
+            case 7:
+                this.showLowStock();
+                break;
+            case 8:
+                for (Product p : inventory) {
+                    if (p.getProductQuantity() == 0) {
+                        System.out.println(p);
+                    }
+                }
+                break;
+            case 0:
+                break;
+            default:
+                System.err.println("Only a number between 0 - 4 should be selected!");
+                throw new IllegalArgumentException();
+        }
+    }
+
+
+
+
+
 
     @Override
     public String toString() {

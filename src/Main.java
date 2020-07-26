@@ -24,6 +24,10 @@ public class Main {
                 3, 89.99, Category.Jackets);
         Product prd05 = new Product("Accessories", "Nice ones",
                 15, 2.99, Category.Accessories);
+        Product prd06 = new Product("Gold necklace", "Fashion ace",
+                0, 10.99, Category.Accessories);
+        Product prd07 = new Product("Polo-shirts", "RL",
+                0, 23.99, Category.Shirts);
 
         // products HashMap
         HashMap<Integer, Product> products = new HashMap()
@@ -47,6 +51,8 @@ public class Main {
         shop02.addProduct(prd03);
         shop02.addProduct(prd04);
         shop02.addProduct(prd05);
+        shop02.addProduct(prd06);
+        shop02.addProduct(prd07);
 
 
 
@@ -99,8 +105,15 @@ public class Main {
         System.out.println("\n----- Shop02 stock of Accessories is full, cannot add more -----");
         shop02.addProduct(prd05);
 
+        // trying menu method
+        System.out.printf("%n%s---------- Menu Demo ----------%s %n", lineBr, lineBr);
 
-
+        try {
+            shop02.menu();
+        } catch (Exception e) {
+            System.out.println("An error occurred in calling menu() method of Shop class!");
+            e.printStackTrace();
+        }
 
 
 
